@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Getting started with Javascript</title>
+	<link rel="stylesheet" type="text/css" href="css/tachyons.css">
+</head>
+<body class="pa2 pa4-ns">
+<main class="tc">
+	<div class="pa2 pa3-ns bg-light-gray tl w-auto dib">
+		<h2>How much do pies cost?</h2>
+		<form>
+			<div class="w-100 pv2">
+				<label for="price">Price</label><br>
+				<input type="text" name="price" class="br2 mv2 pa1 w-100 bn" value="30">
+			</div>
+			<div class="w-100 pv2">
+				<label for="quantity">
+				    Quantity
+				    <span class="bg-blue br2 pa1 f6 fw1 white quantity-label">1</span>
+				</label><br>
+				<!-- we can change it from a number to a range to also control how user use it and make it user friendly
+				<input type="number" name="quantity" class="br2 mv2 pa1 w-100 bn" value="1"> -->
+				<input type="range" name="quantity" class="br2 mv2 pa1 w-100 bn" value="1" min="1" max="10" step="1">
+			</div>
+			<div class="tr">
+			<!-- instead of hardcoding $30 into the html we can use js to do this
+				<h1 class="black-60 fw6 total">$30</h1> -->
+				<h1 class="black-60 fw6 total"></h1>
+			</div>
+		</form>
+	</div>
+</main>
+
+<script type="text/javascript">
+	//grab everything we need
+	const priceInput = document.querySelector('[name=price]');
+	const quantityInput = document.querySelector('[name=quantity]');
+	const total = document.querySelector('.total');
+	const quantityLabel = document.querySelector('.quantity-label');
+
+	//create the functions that we need
+	function calculatePieCost() {
+		const price = priceInput.value;
+		const quantity = quantityInput.value;
+		let cost = price * quantity;
+		total.innerText = '$'+ cost.toFixed(2);
+	}
+	//update the quantity number
+	function updateQuantityLabel() {
+		// body...
+		const quantity = quantityInput.value;
+		quantityLabel.innerText = quantity;
+	}
+	//on first run
+	calculatePieCost();
+	//add our event listeners
+	//priceInput.addEventListener('keyup', calculatePieCost); this is not what we want to use, cos the DOM has an event for form; oninput
+	priceInput.addEventListener('input', calculatePieCost);
+	quantityInput.addEventListener('input', calculatePieCost);
+	quantityInput.addEventListener('input', updateQuantityLabel);
+	
+</script>
+</body>
+</html>

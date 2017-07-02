@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Market List</title>
+	<link rel="stylesheet" type="text/css" href="css/tachyons.css">
+	<style type="text/css">
+		.back{
+			background-size: 100%;
+		}
+	</style>
+</head>
+<body>
+<main class="flex flex-column min-vh-100"><!-- use flex to separate the layouts into diff sections. --> 
+	<header class="w-100 tc bg-light-gray">
+			<span class="f1 ttu">header</span>
+		</div>
+	</header>
+	<section class="flex-auto flex flex-column">
+		<div class="ph2 bg-white tc">
+			<div class="ph3 ph6-l bg-light-gray tl w-50-ns dib">
+				<h2>My Market List</h2>
+				<form>
+					<div id="main-list">
+						<div id="sub-list">
+							<div class="w-100 pv2">
+								<label for="commodity">Name</label><br>
+								<input type="text" name="commodity" class="br2 mv2 pa1 w-100 bn" value="enter commodity">
+							</div>
+							<div class="w-100 pv2">
+								<label for="price">Price</label><br>
+								<input type="text" name="price" class="br2 mv2 pa1 w-100 bn" value="30">
+							</div>
+							<div class="w-100 pv2">
+								<label for="quantity">
+								    Quantity
+								    <span class="bg-blue br2 pa1 f6 fw1 white quantity-label">1</span>
+								</label><br>
+								<!-- we can change it from a number to a range to also control how user use it and make it user friendly
+								<input type="number" name="quantity" class="br2 mv2 pa1 w-100 bn" value="1"> -->
+								<input type="range" name="quantity" class="br2 mv2 pa1 w-100 bn" value="1" min="1" max="10" step="1">
+							</div>
+						</div>
+					</div>
+							<button id="add-button" class="bg-blue br2 pa1 f6 fw1 white pointer" onclick="copyDivs()">+</button>
+					<div class="tr">
+					<!-- instead of hardcoding $30 into the html we can use js to do this
+						<h1 class="black-60 fw6 total">$30</h1> -->
+						<h1 class="black-60 fw6 total"></h1>
+					</div>
+				</form>
+	</div>
+		</div>
+	</section>
+	<footer class="bg-gray pa4 tc">
+		<span class="f6 ttu">&copy; connelblaze</span>
+	</footer>
+</main>
+<script type="text/javascript">
+	//grab everything we need
+	const priceInput = document.querySelector('[name=price]');
+	const quantityInput = document.querySelector('[name=quantity]');
+	const nameInput = document.querySelector('[name=commodity]');
+	const total = document.querySelector('.total');
+	const quantityLabel = document.querySelector('.quantity-label');
+	let i = 0;
+	let mainList = document.getElementById('main-list');
+	let subList = document.getElementById('sub-list');
+
+	//create the functions that we need
+	function calculatePieCost() {
+		const price = priceInput.value;
+		const quantity = quantityInput.value;
+		let cost = price * quantity;
+		total.innerText = '$'+ cost.toFixed(2);
+	}
+	//update the quantity number
+	function updateQuantityLabel() {
+		// body...
+		const quantity = quantityInput.value;
+		quantityLabel.innerText = quantity;
+	}
+	//
+	function totalList() {
+		// body...
+		const price = priceInput.value;
+		const quantity = quantityInput.value;
+		let cost = price * quantity;
+		total.innerText = 'Total cost now $'+ cost.toFixed(2);
+	}
+	//create divs
+	let j = 1;
+	let l = j;
+	// function createMoreList() {
+	// 	// body...
+	// 	let k = 1;
+	// 	for (let i = 0; i < k; i++) {
+	// 		if (j == 4) {
+	// 			console.log("FUll");
+	// 		}
+	// 		//create an an element; div
+	// 		const newDiv = document.createElement('div');
+	// 		const newLabel = document.createElement('label');
+	// 		const newInput = document.createElement('input');
+
+	// 		const newDiv1 = document.createElement('div');
+	// 		const newLabel1 = document.createElement('label');
+	// 		const newInput1 = document.createElement('input');
+
+	// 		const newDiv2 = document.createElement('div');
+	// 		const newLabel2 = document.createElement('label');
+	// 		const newInput2 = document.createElement('input');
+	// 		const newSpan = document.createElement('span');
+	// 		//create a class
+	// 		newDiv.classList.add('pv4', 'w-100');
+	// 		newInput.classList.add('br2', 'mv2', 'pa1', 'w-100', 'bn');
+	// 		newInput1.classList.add('br2', 'mv2', 'pa1', 'w-100', 'bn');
+	// 		newInput2.classList.add('br2', 'mv2', 'pa1', 'w-100', 'bn');
+	// 		newSpan.classList.add('bg-blue', 'br2', 'pa1', 'f6', 'fw1', 'white', 'quantity-label');
+
+	// 		newLabel.innerText = 'Name';
+	// 		newLabel1.innerText = 'Price';
+	// 		newLabel2.innerText = 'Quantity';
+
+	// 		newDiv.appendChild(newLabel);
+	// 		newDiv.appendChild(newInput);
+	// 		newDiv1.appendChild(newLabel1);
+	// 		newDiv1.appendChild(newInput1);
+	// 		newDiv2.appendChild(newLabel2);
+	// 		newDiv2.appendChild(newInput2);
+
+	// 		mainList.appendChild(newDiv);
+	// 		mainList.appendChild(newDiv1);
+	// 		mainList.appendChild(newDiv2);
+	// 	}
+	// 	j++;
+	// 	l = j;
+	// }
+	function copyDivs() {
+		// body...
+		/*let clone = mainList.cloneNode(true);
+		clone.id = "main-list"+ ++i;
+		mainList.parentNode.appendChild(clone);*/
+		let newDiv = document.createElement('div');
+		newDiv.innerHTML = subList.innerHTML;
+		mainList.appendChild(newDiv);
+
+	}
+	//on first run
+	calculatePieCost();
+	//add our event listeners
+	//priceInput.addEventListener('keyup', calculatePieCost); this is not what we want to use, cos the DOM has an event for form; oninput
+	priceInput.addEventListener('input', calculatePieCost);
+	quantityInput.addEventListener('input', calculatePieCost);
+	quantityInput.addEventListener('input', updateQuantityLabel);
+</script>
+</body>
+</html>
